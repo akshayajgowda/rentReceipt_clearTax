@@ -1,21 +1,178 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<div class="jumbotron text-center">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="section-heading">
+        <h1><span>RentGen</span> - Online Rent Receipt Generator</h1>
+      </div>
+    </div>
+  </div>
+  <hr />
 
-<router-outlet></router-outlet>
+  <div class="row">
+    <div class="col-md-12"></div>
+    <div class="col-md-3">
+      <label> Tenants Name</label>
+      <input
+        [(ngModel)]="tatent.tatentName"
+        name="tenantlastname"
+        type="text"
+        pattern="^[a-zA-Z ]+$"
+        placeholder="name of tenant"
+        required="required"
+        class="form-control"
+      />
+    </div>
+
+    <div class="col-md-3">
+      <label> Amount of Rent</label>
+      <input
+        [(ngModel)]="tatent.amount"
+        name="rent"
+        type="number"
+        placeholder="Insert amount only"
+        required="required"
+        class="form-control"
+      />
+    </div>
+
+    <div class="col-md-3">
+      <label> owners Name</label>
+      <input
+        [(ngModel)]="tatent.ownerName"
+        name="ownerfirstname"
+        type="text"
+        pattern="^[a-zA-Z ]+$"
+        placeholder="name of owner"
+        required="required"
+        class="form-control"
+      />
+    </div>
+    <div class="col-md-3">
+      <label> Phone</label>
+      <input
+        [(ngModel)]="tatent.phone"
+        name="ownerphone"
+        pattern="^[0-9+\(\)#\.\s\/ext-]+$"
+        type="tel"
+        placeholder="Phone number of owner"
+        required="required"
+        class="form-control"
+      />
+    </div>
+  </div>
+  <div class="small-spacer"></div>
+  <div class="row">
+    <div class="col-md-12">
+      <hr />
+    </div>
+    <div class="col-md-4">
+      <label>PAN/TIN Number</label>
+      <input
+        [(ngModel)]="tatent.atmnum"
+        name="ownerpan"
+        type="text"
+        placeholder="Tax related number of the owner"
+        required="required"
+        class="form-control"
+      />
+    </div>
+
+    <div class="col-md-4">
+      <label>Receipt Start Date</label>
+      <input
+        [(ngModel)]="tatent.startDate"
+        id="datepickerstartdate"
+        name="datepickerstartdate"
+        type="date"
+        placeholder="First date of the receipt"
+        autocomplete="off"
+        required="required"
+        class="hasDatepicker"
+        class="form-control"
+      />
+    </div>
+    <div class="col-md-4">
+      <label> Receipt End Date</label>
+      <input
+        [(ngModel)]="tatent.lastDate"
+        id="datepickerenddate"
+        name="datepickerenddate"
+        type="date"
+        placeholder="Last date of the receipt"
+        autocomplete="off"
+        required="required"
+        class="hasDatepicker"
+        class="form-control"
+      />
+    </div>
+  </div>
+  <div class="small-spacer"></div>
+  <div class="row">
+    <div class="col-md-12">
+      <hr />
+    </div>
+
+    <div class="col-md-12">
+      <label> Address</label>
+      <textarea
+        [(ngModel)]="tatent.address"
+        name="rentedaddress"
+        cols="30"
+        rows="4 "
+        placeholder="Rented property address"
+        required="required"
+        class="form-control"
+      ></textarea>
+    </div>
+  </div>
+
+  <hr />
+  <div class="row">
+    <div class="col-md-12">
+      <button
+        (click)="onPrintPDF(tatent)"
+        class="btn rentgen-btn"
+        type="submit"
+        class="btn btn-success"
+      >
+        <i class="fa fa-download" aria-hidden="true"></i> Generate Rent Receipt
+      </button>
+      <div class="form-response"></div>
+    </div>
+  </div>
+</div>
+<hr />
+<hr />
+<div class="container">
+  <div class="card" *ngFor="let i of tatents">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+          <h4><b>Rent Receipt</b></h4>
+        </div>
+        <div class="col-md-3">
+          <p style="font-weight: bold;color : grey">{{ i.lastDate }}</p>
+        </div>
+        <div class="col-md-3"></div>
+        <div class="col-md-3">
+          <p>
+            Recipt No :1 <br />
+            Date : 30 Sep 2018
+          </p>
+        </div>
+      </div>
+      <p>Generated on clearTax(cleartax.in/save/rent)</p>
+      <p>
+        Received sum of INR <b>Rs.{{ i.amount }}</b> from
+        <b>{{ i.ownerName }}</b> towards the rent of property located at
+        <b>{{ i.address }}</b> for the period from <b>{{ i.startDate }}</b> to
+        <b>{{ i.lastDate }}</b>
+      </p>
+
+      <h6>
+        <b>{{ i.ownerName }}</b>
+      </h6>
+      <p>PAN: BFT23HGFRT</p>
+    </div>
+  </div>
+</div>
